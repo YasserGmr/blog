@@ -1,0 +1,4 @@
+.prettierc
+*.env
+node_modules/
+dev-data/*
