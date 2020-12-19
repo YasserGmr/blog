@@ -79,6 +79,7 @@ app.use((req, res, next) => {
 app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {
+  res.redirect('/');
   next();
   // next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
