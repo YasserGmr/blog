@@ -1,10 +1,47 @@
-footer.footer
-  .footer__logo
-    img(src='/img/logo-green.png' alt='Natour logo')
-  ul.footer__nav
-    li: a(href='#') About us
-    li: a(href='#') Download apps
-    li: a(href='#') Become a guide
-    li: a(href='#') Careers
-    li: a(href='#') Contact
-  p.footer__copyright &copy; by Jonas Schmedtmann. Feel free to use this project for your own purposes, EXCEPT producing your own course or tutorials!
+// Footer
+footer.s-footer
+  .s-footer__main
+    .row
+      .col-two.md-four.mob-full.s-footer__sitelinks
+        h4 Quick Links
+        ul.s-footer__linklist
+          li
+            a(href='/') Home
+          li
+            a(href='/blogs') All Blogs 
+          li
+            a(href='/article/hello-world-of-blogging!' title='') About
+          li
+            a(href='/contact' title='') Contact
+          li
+            a(href='#0') Privacy Policy
+      // end s-footer__sitelinks
+      .col-two.md-four.mob-full.s-footer__social
+        h4 Social
+        ul.s-footer__linklist
+          li
+            a(href='#0') Twitter
+      // end s-footer__social
+      .col-five.md-full.end.s-footer__subscribe
+        h4 My Newsletter
+        p
+          | Join my subscribers list to get the latest blogs delivered directly into your inbox
+        .subscribe-form
+          form#mc-form.group(novalidate='true')
+            input#mc-email.email(type='email' value='' name='EMAIL' placeholder='Email Address' required='')
+            input(type='submit' name='subscribe' value='Send')
+            //- label.subscribe-message(for='mc-email')
+      // end s-footer__subscribe
+      // end s-footer__main
+      .s-footer__bottom
+        .row
+          .col-full
+            .s-footer__copyright
+              span &copy; #{new Date().getFullYear()} Yasser Goumghar
+              span
+                | This Website is made with &#x2764; by
+                a(href='https://yassergmr.com/' target="_blank")| Yasser Goumghar
+            .go-top
+              a.smoothscroll(title='Back to Top' href='#top')
+      // end s-footer__bottom
+// end s-footer

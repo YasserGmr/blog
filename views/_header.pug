@@ -1,14 +1,48 @@
+//pageheader
 header.header
-  nav.nav.nav--tours
-    a.nav__el(href='/') All tours
-  .header__logo
-    img(src='/img/logo-white.png' alt='Natours logo')
-  nav.nav.nav--user
-    if user
-      a.nav__el.nav__el--logout Log out
-      a.nav__el(href='/me')
-        img.nav__user-img(src=`/img/users/${user.photo}` alt=`Photo of ${user.name}`)
-        span= user.name.split(' ')[0]
-    else
-      a.nav__el(href='/login') Log in
-      a.nav__el.nav__el--cta(href='#') Sign up
+        .header__content.row
+            .header__logo
+                a.logo(href='/')
+                    img(src='/images/logo.png' alt='Homepage')
+            // end header__logo
+            ul.header__social
+                li
+                    a(href='https://twitter.com/iKarasumaRenya' target='_blank')
+                        i.fa.fa-twitter(aria-hidden='true')
+            // end header__social
+            a.header__search-trigger(href='#0')
+            .header__search
+                form.header__search-form(role='search' method='get' action='#')
+                    label
+                        span.hide-content Search for:
+                        input.search-field(type='search' placeholder='Type Keywords' value='' name='s' title='Search for:' autocomplete='off')
+                    input.search-submit(type='submit' value='Search')
+                a.header__overlay-close(href='#0' title='Close Search') Close
+            // end header__search
+            a.header__toggle-menu(href='#0' title='Menu')
+                span Menu
+            nav.header__nav-wrap
+                h2.header__nav-heading.h6 Site Navigation
+                ul.header__nav
+                    li.current
+                        a(href='/' title='') Home
+                    li
+                        a(href='/categories/islam' title='') Islam
+                    li
+                        a(href='/categories/coding' title='') Coding
+                    li
+                        a(href='/categories/business' title='') Business & Marketing
+                    li
+                        a(href='/categories/productivity' title='') Productivity
+                    li
+                        a(href='/categories/productivity' title='') Study
+                    li
+                        a(href='/article/hello-world-of-blogging!' title='') About
+                    li
+                        a(href='/contact' title='') Contact
+                // end header__nav
+                a.header__overlay-close.close-mobile-menu(href='#0' title='Close Menu') Close
+            // end header__nav-wrap
+            // header-content
+            // header
+

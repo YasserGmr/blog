@@ -1,0 +1,62 @@
+extends base
+
+block content
+    section.s-content
+        .row.masonry-wrap
+            .masonry
+                .grid-sizer
+                each article in articles
+                    if article.type === 'quote'
+                        article.masonry__brick.entry.format-quote(data-aos='fade-up')
+                            .entry__thumb
+                                blockquote
+                                    p
+                                        | #{article.article[0].quote}
+                                    cite #{article.article[0].quotee}
+                        // end article
+                    else
+                        article.masonry__brick.entry.format-standard(data-aos='fade-up')
+                            .entry__thumb
+                                a.entry__thumb-link(href=`/article/${article.slug}`)
+                                    //- img(src='images/thumbs/masonry/lamp-400.jpg' srcset='images/thumbs/masonry/lamp-400.jpg 1x, images/thumbs/masonry/lamp-800.jpg 2x' alt='')
+                                    img(src=`${article.cover}` alt=`${article.title}`)
+                            .entry__text
+                                .entry__header
+                                    .entry__date
+                                        a(href=`/article/${article.slug}`) #{article.createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
+                                    h1.entry__title
+                                        a(href=`/article/${article.slug}`) #{article.title}.
+                                .entry__excerpt
+                                    p
+                                        | #{article.preview}
+                                    .entry__meta
+                                        span.entry__meta-links
+                                            each category in article.category
+                                                a(href=`/categories/${category}`) #{category}
+                        // end article
+                    // end masonry
+                    // end masonry-wrap
+            .row
+                //- .col-full
+                //-     nav.pgn
+                //-         ul
+                //-             li
+                //-                 a.pgn__prev(href='#0') Prev
+                //-             li
+                //-                 a.pgn__num(href='#0') 1
+                //-             li
+                //-                 span.pgn__num.current 2
+                //-             li
+                //-                 a.pgn__num(href='#0') 3
+                //-             li
+                //-                 a.pgn__num(href='#0') 4
+                //-             li
+                //-                 a.pgn__num(href='#0') 5
+                //-             li
+                //-                 span.pgn__num.dots &mldr;
+                //-             li
+                //-                 a.pgn__num(href='#0') 8
+                //-             li
+                //-                 a.pgn__next(href='#0') Next
+                // s-content
+

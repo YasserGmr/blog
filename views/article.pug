@@ -1,0 +1,54 @@
+extends base
+
+block content
+    section.s-content.s-content--narrow.s-content--no-padding-bottom
+        article.row.format-standard
+            .s-content__header.col-full
+                h1.s-content__header-title
+                    | #{article.title}
+                ul.s-content__header-meta
+                    li.date #{article.createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
+                    li.cat
+                        | In 
+                        each category in article.category
+                            a(href=`/categories/${category}`) #{category}  
+            // end s-content__header
+            .s-content__media.col-full
+                .s-content__post-thumb
+                    img(src= `${article.thumbnail}`  
+                    sizes='(max-width: 2000px) 100vw, 2000px' alt='')
+            // end s-content__media
+            .col-full.s-content__main
+                each content in article.article
+                    if (content.paragraph)
+                        if (content.class)
+                            p.article(class= `${content.class}`)
+                                | #{content.paragraph}.
+                        else 
+                            p.article
+                                | #{content.paragraph}.
+                    else if (content.heading)
+                        h2 #{content.heading}
+                    else if (content.orderedList)
+                        ol
+                            each orderedList in content.orderedList
+                                li #{orderedList}
+                    else if (content.quote) 
+                        blockquote
+                            p
+                                | #{content.quote}
+                            if (content.quotee)
+                                cite
+                                    a(href='#') #{content.quotee}
+            h3 About the Author
+            .s-content__author
+                img(src='/favicon.png' alt='')
+                .s-content__author-about
+                    h4.s-content__author-name
+                        a(href='/about') Yasser Goumghar
+                    p
+                        | Hey, I'm Yasser Goumghar, a Moroccan entrepreneur, Marketer, Full Stack Developper, and a High School Student.
+                    ul.s-content__author-social
+                        li
+                            a(href='https://twitter.com/iKarasumaRenya' target='_blank') Twitter
+        // end s-content__main
