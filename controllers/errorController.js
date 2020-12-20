@@ -102,5 +102,6 @@ module.exports = (err, req, res, next) => {
     if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
 
     sendErrorProd(error, req, res);
+    console.log(error);
   }
 };

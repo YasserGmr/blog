@@ -79,12 +79,12 @@ app.use((req, res, next) => {
 
 // 3) ROUTES
 app.use('/', viewRouter);
-
-app.use('/api/v1/newsLetter', newsletterRouter);
 app.use('/api/v1/articles', articleRouter);
+app.use('/api/v1/newsLetter', newsletterRouter);
 
 app.all('*', (req, res, next) => {
   res.redirect('/');
+  console.log(req.originalUrl);
   next();
   // next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
