@@ -11,10 +11,12 @@ const cors = require('cors');
 // const hpp = require('hpp');
 // const bodyParser = require('body-parser');
 
-const AppError = require('./utils/appError');
+// const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 // const userRouter = require('./routes/userRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const articleRouter = require('./routes/articleRoutes');
+const newsletterRouter = require('./routes/newsletterRouter');
 
 // Start express app
 const app = express();
@@ -77,6 +79,9 @@ app.use((req, res, next) => {
 
 // 3) ROUTES
 app.use('/', viewRouter);
+
+app.use('/api/v1/newsLetter', newsletterRouter);
+app.use('/api/v1/articles', articleRouter);
 
 app.all('*', (req, res, next) => {
   res.redirect('/');
