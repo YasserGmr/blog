@@ -1,5 +1,13 @@
 extends base
 
+block preview
+    meta(property='og:title' content=`${article.title}`)
+    meta(property='og:description' content=`${article.preview}`)
+    meta(property='og:image' content=`/${article.thumbnail}`)
+    meta(property='og:url' content=`/article/${article.slug}`)
+    meta(property='og:type' content='blog')
+
+
 block content
     section.s-content.s-content--narrow.s-content--no-padding-bottom
         article.row.format-standard
