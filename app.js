@@ -78,9 +78,9 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.use('/', viewRouter);
 app.use('/api/v1/articles', articleRouter);
 app.use('/api/v1/newsLetter', newsletterRouter);
+app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {
   res.redirect('/');

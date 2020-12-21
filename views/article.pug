@@ -1,13 +1,5 @@
 extends base
 
-block preview
-    meta(property='og:title' content=`${article.title}`)
-    meta(property='og:description' content=`${article.preview}`)
-    meta(property='og:image' content=`/${article.thumbnail}`)
-    meta(property='og:url' content=`/article/${article.slug}`)
-    meta(property='og:type' content='blog')
-
-
 block content
     section.s-content.s-content--narrow.s-content--no-padding-bottom
         article.row.format-standard
@@ -23,7 +15,7 @@ block content
             // end s-content__header
             .s-content__media.col-full
                 .s-content__post-thumb
-                    img(src= `/${article.thumbnail}`  
+                    img(src= `${article.thumbnail}`  
                     sizes='(max-width: 2000px) 100vw, 2000px' alt='')
             // end s-content__media
             .col-full.s-content__main
@@ -48,6 +40,15 @@ block content
                             if (content.quotee)
                                 cite
                                     a(href='#') #{content.quotee}
+                    else if (content.code)
+                            pre
+                                each codeBlock in content.code 
+                                    code
+                                            | #{codeBlock}
+                    else if (content.image)
+                        img(src=`${content.image}` style="padding-left: 4rem;padding-right: 4rem;")
+
+
             h3 About the Author
             .s-content__author
                 img(src='/images/favicon.png' alt='')
