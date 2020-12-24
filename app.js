@@ -13,10 +13,10 @@ const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-// const userRouter = require('./routes/userRoutes');
+const userRouter = require('./routes/userRoutes');
 const viewRouter = require('./routes/viewRoutes');
-const articleRouter = require('./routes/articleRoutes');
 const newsletterRouter = require('./routes/newsletterRouter');
+const adminRouter = require('./routes/adminRoutes');
 
 // Start express app
 const app = express();
@@ -78,8 +78,9 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.use('/api/v1/articles', articleRouter);
+app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/newsLetter', newsletterRouter);
+app.use('/api/v1/users', userRouter);
 app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {

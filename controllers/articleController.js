@@ -1,3 +1,6 @@
+const multer = require('multer');
+const sharp = require('sharp');
+
 const Article = require('../models/articleModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -32,3 +35,65 @@ exports.getArticle = catchAsync(async (req, res, next) => {
     article
   });
 });
+
+const multerStorage = multer.memoryStorage();
+
+const multerFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true);
+  } else {
+    cb(new AppError('Not an image! Please upload only images.', 400), false);
+  }
+};
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+
+//! Testing
+
+exports.uploadTourImages = upload.fields([
+  { name: 'cover', maxCount: 1 },
+  { name: 'thumbnail', maxCount: 1 }
+]);
+
+exports.resizeTourImages = catchAsync(async (req, res, next) => {
+  //* This is for Testing Purposes
+  // return next();
+
+  if (!req.files.cover || !req.files.thumbnail) {
+    const err = new AppError('Please upload a cover and a thumbnail', 400);
+    return next(err);
+  }
+
+  //· 1) Cover image
+  req.body.cover = req.files.cover[0].originalname;
+  await sharp(req.files.cover[0].buffer)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/images/thumbs/masonry/${req.body.cover}`);
+
+  //· 2) Thumbnail image
+  req.body.thumbnail = req.files.thumbnail[0].originalname;
+  await sharp(req.files.thumbnail[0].buffer)
+    .toFormat('jpeg')
+    .jpeg({ quality: 90 })
+    .toFile(`public/images/thumbs/masonry/gallery/${req.body.thumbnail}`);
+
+  res.status(200).json({
+    message: 'Upload Succeded'
+  });
+});
+
+// exports.editArticle = catchAsync(async (req, res, next) => {
+//   res.status(200).json({
+//     message: 'Helo World'
+//   });
+// });
+
+// exports.deleteArticle = catchAsync(async (req, res, next) => {
+//   res.status(200).json({
+//     message: 'Helo World'
+//   });
+// });
