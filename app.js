@@ -11,7 +11,7 @@ const cors = require('cors');
 // const hpp = require('hpp');
 // const bodyParser = require('body-parser');
 
-// const AppError = require('./utils/appError');
+const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 // const userRouter = require('./routes/userRoutes');
 const viewRouter = require('./routes/viewRoutes');
@@ -83,10 +83,7 @@ app.use('/api/v1/newsLetter', newsletterRouter);
 app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {
-  res.redirect('/');
-  console.log(req.originalUrl);
-  next();
-  // next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
 });
 
 app.use(globalErrorHandler);
