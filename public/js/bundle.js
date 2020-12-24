@@ -1,0 +1,1 @@
+(()=>{"use strict";const e={login:document.getElementById("login")},{login:t}=(require("prettier"),e),{login:n}=e;n&&t.addEventListener("click",(e=>{e.preventDefault(),console.log("Helo")}))})();

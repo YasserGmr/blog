@@ -1,0 +1,14 @@
+extends base
+
+block content
+    section.s-content.s-content--narrow.s-content--no-padding-bottom
+        .row
+            h3.add-bottom Are you me? If you're not me then what are you doing here? could you please leave this login page and shut the door behind you?
+            form
+                div
+                    label(for='sampleInput') Your email
+                    input.full-width(type='email' placeholder='test@mailbox.com' id="email")
+                div
+                    label(for='sampleInput') Your Password
+                    input.full-width(type='password' placeholder='password' id="password")
+                input.btn--primary(type='submit' value='Submit' id="login")
