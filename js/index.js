@@ -1,11 +1,15 @@
 import { elements } from './base';
-import * as Auth from './controllers/authController';
+import { loginController } from './controllers/authController';
+import { articleController } from './controllers/articleController';
 
-const { login } = elements;
+const { login, article } = elements;
 
 const init = () => {
   //) Check if Login button exists, If true, add Event Listner
-  if (login) Auth.loginController();
+  if (login) loginController();
+
+  //) Check if Add Article button exists, if true, add Event Listner
+  if (article) articleController();
 };
 
 init();

@@ -1,0 +1,71 @@
+extends base
+
+block content
+    section.s-content.s-content--narrow.s-content--no-padding-bottom
+        section#styles.s-styles
+        .row.narrow.section-intro.add-bottom.text-center
+            .col-twelve.tab-full
+            h1  { السلام عليكم و رحمة الله و بركاتة }
+            //- h1 Admin Page
+            p.lead
+                | This is an admin page, here you can add Title, Type, Cover, Thumbnail, Article, Category
+
+        .row.add-bottom
+            .col-twelve
+                h3 Tables
+                p
+                | Be sure to use properly formed table markup with 
+                code &lt;thead&gt;
+                |  and 
+                code &lt;tbody&gt;
+                |  when building a 
+                code table
+                | .
+                .table-responsive
+                table
+                    thead
+                    tr
+                        th Properties
+                        th Option 1
+                        th Option 2
+                        th Option 3
+                        th Option 4
+                    tbody
+                    tr
+                        td Naruto Uzumaki
+                        td 16
+                        td Konoha
+                        td Male
+                        td Male
+                    tr
+                        td Sakura Haruno
+                        td 16
+                        td Female
+                        td Konoha
+                        td Konoha
+            // end row
+
+
+        .row
+            .col-twelve.tab-full
+                h3.add-bottom Form Styles
+                form
+                    div#articleTypes
+                        label(for='sampleRecipientInput') Input Types
+                        .cl-custom-select
+                            select#sampleRecipientInput.full-width.inputOptions
+                                option(value='Option 1') title
+                                option(value='Option 5') article
+                                option(value='Option 2') type
+                                option(value='Option 3') cover
+                                option(value='Option 4') thumbnail
+                                option(value='Option 6') category
+                    label(for='exampleMessage') Message
+                    textarea#exampleMessage.full-width(placeholder='Your message')
+                    .row.add-bottom.align-center
+                        input.form__upload(type='file', accept='image/*', id='photo', name='photo' multiple)
+                        label(for='photo') Choose new photo
+                    .row
+                        input.btn--primary.col-seven(type='submit' value='Add To Article' id="subArticle")
+                        input.btn--primary.col-four.pull-left(type='submit' value='Submit' id="article")
+

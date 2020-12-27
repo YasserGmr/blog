@@ -3,10 +3,19 @@ export const elements = {
   email: document.getElementById('email'),
   password: document.getElementById('password'),
   form: document.querySelector('.login__form'),
+  articleInput: document.getElementById('exampleMessage'),
+  article: document.getElementById('article'),
+  subArticle: document.getElementById('subArticle'),
+  articleList: document.getElementById('sampleRecipientInput'),
+  articleTypesOptions: document.getElementById('articleTypes'),
+  inputOptions: document.querySelectorAll('.inputOptions'),
+  photo: document.getElementById('photo'),
 };
 
 export const requests = {
   loginReq: '/api/v1/users/login',
+  addArticleReq: '/api/v1/admin/article',
+  addPicureReq: '/api/v1/admin/article/picutres',
 };
 
 export const message = {

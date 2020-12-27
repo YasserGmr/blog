@@ -19,10 +19,19 @@ const elements = {
   email: document.getElementById('email'),
   password: document.getElementById('password'),
   form: document.querySelector('.login__form'),
+  articleInput: document.getElementById('exampleMessage'),
+  article: document.getElementById('article'),
+  subArticle: document.getElementById('subArticle'),
+  articleList: document.getElementById('sampleRecipientInput'),
+  articleTypesOptions: document.getElementById('articleTypes'),
+  inputOptions: document.querySelectorAll('.inputOptions'),
+  photo: document.getElementById('photo'),
 };
 
 const requests = {
   loginReq: '/api/v1/users/login',
+  addArticleReq: '/api/v1/admin/article',
+  addPicureReq: '/api/v1/admin/article/picutres',
 };
 
 const message = {
@@ -30,6 +39,152 @@ const message = {
     "Mrhba b si Yasser, Don't forget: {يَا أَيُّهَا الَّذِينَ آمَنُوا أَطِيعُوا اللَّهَ وَأَطِيعُوا الرَّسُولَ}",
   failureMessage:
     "Nah, Wrong Password, Don't forget: {من أطاعني دخل الجنة، ومن عصاني فقد أبى}",
+};
+
+
+/***/ }),
+
+/***/ "./js/controllers/articleController.js":
+/*!*********************************************!*\
+  !*** ./js/controllers/articleController.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "articleController": () => /* binding */ articleController
+/* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base */ "./js/base.js");
+/* harmony import */ var _views_articleViews__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/articleViews */ "./js/views/articleViews.js");
+
+
+
+
+const {
+  article,
+  subArticle,
+  articleInput,
+  articleList,
+  inputOptions,
+} = _base__WEBPACK_IMPORTED_MODULE_1__.elements;
+
+const { addArticleReq } = _base__WEBPACK_IMPORTED_MODULE_1__.requests;
+
+const getSubArticle = () => {
+  const subArticleOptions = document.getElementById('subArticleOptions');
+  return subArticleOptions.options[subArticleOptions.selectedIndex].text;
+};
+
+const getInput = () => {
+  let subArticleSelected;
+
+  //* Check if Article is selected
+  const isArticle = isTypeSelected('article');
+  if (isArticle) subArticleSelected = getSubArticle();
+
+  return {
+    list: articleList.options[articleList.selectedIndex].text,
+    sublist: subArticleSelected,
+    input: articleInput.value,
+  };
+};
+
+const isTypeSelected = (type) => {
+  //* Get selected type and compare it to Article
+  const selectedType = articleList.options[articleList.selectedIndex].text;
+  return selectedType === type;
+};
+
+const addArticleTypes = () => {
+  //* Check if Article is selected
+  const isArticle = isTypeSelected('article');
+
+  //* If type is article, render the subtypes, else return
+  if (isArticle) return (0,_views_articleViews__WEBPACK_IMPORTED_MODULE_2__.renderSubArticles)();
+
+  //* Remove the subarticle element from html
+  const subArticleDiv = document.getElementById('subArticleDiv');
+  if (subArticleDiv) return subArticleDiv.remove();
+};
+
+const Article = {
+  category: [],
+  article: [],
+};
+
+const handleAddCategory = (input) => Article['category'].push(input.input);
+
+const handleAddArticle = (userInput) => {
+  //* Type: Object
+  const { sublist, input } = userInput;
+
+  const currentInput = {};
+  currentInput[`${sublist}`] = input;
+  return Article.article.push(currentInput);
+};
+
+const addInput = (input) => {
+  //) Check if selected type is Article or Categories
+  const isArticle = isTypeSelected('article');
+  const isCategory = isTypeSelected('category');
+
+  //) If article or category, then handle each one of them
+  if (isArticle) return handleAddArticle(input);
+  if (isCategory) return handleAddCategory(input);
+
+  Article[input.list] = input.input;
+};
+
+const addSubArticle = (e) => {
+  //) Prevent reload
+  e.preventDefault();
+
+  //) Get article input and selected type
+  const input = getInput();
+
+  //) Add them to the Global article object
+  addInput(input);
+};
+
+const sendArticle = async (input) => {
+  try {
+    const { title, cover, thumbnail, type, category, article } = input;
+    console.log(input);
+
+    const res = await axios__WEBPACK_IMPORTED_MODULE_0___default().post(addArticleReq, {
+      title,
+      cover,
+      thumbnail,
+      type,
+      category,
+      article,
+    });
+    console.log(res);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const addArticle = async (e) => {
+  //) Prevent reload
+  e.preventDefault();
+
+  //) Get the Article Object and Send it to the Database
+  await sendArticle(Article);
+};
+
+const articleController = () => {
+  //) Event Listner to submit a sub Article
+  subArticle.addEventListener('click', addSubArticle);
+
+  //) Event listner to options, if Article is clicked, Add sub Articles
+  inputOptions[0].addEventListener('change', addArticleTypes);
+
+  //? Not yet developped
+  article.addEventListener('click', addArticle);
 };
 
 
@@ -114,17 +269,57 @@ const loginController = () => {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./base */ "./js/base.js");
 /* harmony import */ var _controllers_authController__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./controllers/authController */ "./js/controllers/authController.js");
+/* harmony import */ var _controllers_articleController__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./controllers/articleController */ "./js/controllers/articleController.js");
 
 
 
-const { login } = _base__WEBPACK_IMPORTED_MODULE_0__.elements;
+
+const { login, article } = _base__WEBPACK_IMPORTED_MODULE_0__.elements;
 
 const init = () => {
   //) Check if Login button exists, If true, add Event Listner
-  if (login) _controllers_authController__WEBPACK_IMPORTED_MODULE_1__.loginController();
+  if (login) (0,_controllers_authController__WEBPACK_IMPORTED_MODULE_1__.loginController)();
+
+  //) Check if Add Article button exists, if true, add Event Listner
+  if (article) (0,_controllers_articleController__WEBPACK_IMPORTED_MODULE_2__.articleController)();
 };
 
 init();
+
+
+/***/ }),
+
+/***/ "./js/views/articleViews.js":
+/*!**********************************!*\
+  !*** ./js/views/articleViews.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "renderSubArticles": () => /* binding */ renderSubArticles
+/* harmony export */ });
+/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../base */ "./js/base.js");
+
+
+const { articleTypesOptions } = _base__WEBPACK_IMPORTED_MODULE_0__.elements;
+
+const renderSubArticles = () => {
+  const markup = `    <div id="subArticleDiv">
+        <label for="sampleRecipientInput">Article Types</label>
+        <div class="cl-custom-select">
+            <select class="full-width" id="subArticleOptions" >
+                <option value="Option 1">paragraph</option>
+                <option value="Option 3">heading</option>
+                <option value="Option 4">image</option>
+            </select>
+        </div>
+    </div>
+`;
+
+  articleTypesOptions.insertAdjacentHTML('afterend', markup);
+};
 
 
 /***/ }),
