@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { elements, requests, message } from '../base';
-import { success } from '../views/authenticationView';
+import { renderAlert } from '../views/viewsBase';
 
-const { login, email, password } = elements;
+const { login, email, password, form } = elements;
 const { loginReq } = requests;
 
 const sendCredentials = (credentials) => {
@@ -22,10 +22,9 @@ const loginHandler = async (e) => {
     password: password.value,
   };
 
-  let type = {
-    success: 'success',
-    error: 'error',
-  };
+  let type = ['success', 'error'];
+
+  const [success, error] = type;
 
   try {
     //& Pass The email and password to a helper function that loggs in
@@ -33,11 +32,11 @@ const loginHandler = async (e) => {
 
     //& Validate Login
     const { successMessage } = message;
-    success(successMessage, type['success']);
-  } catch (error) {
+    renderAlert(form, successMessage, success);
+  } catch (err) {
     //& Error Message and reload
     const { failureMessage } = message;
-    success(failureMessage, type['error']);
+    renderAlert(form, failureMessage, error);
   }
 
   //& Reload the page

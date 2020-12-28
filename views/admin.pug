@@ -14,13 +14,7 @@ block content
             .col-twelve
                 h3 Tables
                 p
-                | Be sure to use properly formed table markup with 
-                code &lt;thead&gt;
-                |  and 
-                code &lt;tbody&gt;
-                |  when building a 
-                code table
-                | .
+                | Here are The E-num properties, Else you will face a Problem 
                 .table-responsive
                 table
                     thead
@@ -30,26 +24,29 @@ block content
                         th Option 2
                         th Option 3
                         th Option 4
+                        th Option 5
                     tbody
                     tr
-                        td Naruto Uzumaki
-                        td 16
-                        td Konoha
-                        td Male
-                        td Male
+                        td Category
+                        td Islam
+                        td Coding
+                        td Business
+                        td Productivity
+                        td Study
                     tr
-                        td Sakura Haruno
-                        td 16
-                        td Female
-                        td Konoha
-                        td Konoha
+                        td Type
+                        td Article
+                        td Quote
+                        td Podcast
+                        td Course
+                        td 
             // end row
 
 
         .row
             .col-twelve.tab-full
                 h3.add-bottom Form Styles
-                form
+                form#addArticle__form
                     div#articleTypes
                         label(for='sampleRecipientInput') Input Types
                         .cl-custom-select
@@ -62,9 +59,9 @@ block content
                                 option(value='Option 6') category
                     label(for='exampleMessage') Message
                     textarea#exampleMessage.full-width(placeholder='Your message')
-                    .row.add-bottom.align-center
-                        input.form__upload(type='file', accept='image/*', id='photo', name='photo' multiple)
-                        label(for='photo') Choose new photo
+                    //- .row.add-bottom.align-center
+                    //-     input.form__upload(type='file', accept='image/*', id='photo', name='photo' multiple)
+                    //-     label(for='photo') Choose new photo
                     .row
                         input.btn--primary.col-seven(type='submit' value='Add To Article' id="subArticle")
                         input.btn--primary.col-four.pull-left(type='submit' value='Submit' id="article")

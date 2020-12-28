@@ -10,6 +10,7 @@ export const elements = {
   articleTypesOptions: document.getElementById('articleTypes'),
   inputOptions: document.querySelectorAll('.inputOptions'),
   photo: document.getElementById('photo'),
+  addArticleForm: document.getElementById('addArticle__form'),
 };
 
 export const requests = {

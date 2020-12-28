@@ -26,6 +26,7 @@ const elements = {
   articleTypesOptions: document.getElementById('articleTypes'),
   inputOptions: document.querySelectorAll('.inputOptions'),
   photo: document.getElementById('photo'),
+  addArticleForm: document.getElementById('addArticle__form'),
 };
 
 const requests = {
@@ -59,6 +60,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base */ "./js/base.js");
 /* harmony import */ var _views_articleViews__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/articleViews */ "./js/views/articleViews.js");
+/* harmony import */ var _views_viewsBase__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../views/viewsBase */ "./js/views/viewsBase.js");
+
 
 
 
@@ -69,6 +72,7 @@ const {
   articleInput,
   articleList,
   inputOptions,
+  addArticleForm,
 } = _base__WEBPACK_IMPORTED_MODULE_1__.elements;
 
 const { addArticleReq } = _base__WEBPACK_IMPORTED_MODULE_1__.requests;
@@ -138,6 +142,11 @@ const addInput = (input) => {
   Article[input.list] = input.input;
 };
 
+const removeBox = () => {
+  const alertBox = document.getElementById('alert');
+  alertBox.style.display = 'none';
+};
+
 const addSubArticle = (e) => {
   //) Prevent reload
   e.preventDefault();
@@ -147,6 +156,13 @@ const addSubArticle = (e) => {
 
   //) Add them to the Global article object
   addInput(input);
+
+  //) Render success alert
+  const message = 'Sub Article Added Successfully';
+  (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_3__.renderAlert)(addArticleForm, message, 'info');
+
+  //) Wait 2 seconds, then remove it
+  setTimeout(removeBox, 2000);
 };
 
 const sendArticle = async (input) => {
@@ -162,9 +178,20 @@ const sendArticle = async (input) => {
       category,
       article,
     });
+
+    const message = 'Article Successfully Aded';
+    (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_3__.renderAlert)(addArticleForm, message, 'success');
+
+    //) Wait 2 seconds, then remove it
+    setTimeout(removeBox, 2000);
     console.log(res);
   } catch (error) {
     console.log(error);
+    const message = 'Something went wrong, Please try again';
+    (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_3__.renderAlert)(addArticleForm, message, 'error');
+
+    //) Wait 2 seconds, then remove it
+    setTimeout(removeBox, 2000);
   }
 };
 
@@ -204,12 +231,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../base */ "./js/base.js");
-/* harmony import */ var _views_authenticationView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/authenticationView */ "./js/views/authenticationView.js");
+/* harmony import */ var _views_viewsBase__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../views/viewsBase */ "./js/views/viewsBase.js");
 
 
 
 
-const { login, email, password } = _base__WEBPACK_IMPORTED_MODULE_1__.elements;
+const { login, email, password, form } = _base__WEBPACK_IMPORTED_MODULE_1__.elements;
 const { loginReq } = _base__WEBPACK_IMPORTED_MODULE_1__.requests;
 
 const sendCredentials = (credentials) => {
@@ -229,10 +256,9 @@ const loginHandler = async (e) => {
     password: password.value,
   };
 
-  let type = {
-    success: 'success',
-    error: 'error',
-  };
+  let type = ['success', 'error'];
+
+  const [success, error] = type;
 
   try {
     //& Pass The email and password to a helper function that loggs in
@@ -240,11 +266,11 @@ const loginHandler = async (e) => {
 
     //& Validate Login
     const { successMessage } = _base__WEBPACK_IMPORTED_MODULE_1__.message;
-    (0,_views_authenticationView__WEBPACK_IMPORTED_MODULE_2__.success)(successMessage, type['success']);
-  } catch (error) {
+    (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_2__.renderAlert)(form, successMessage, success);
+  } catch (err) {
     //& Error Message and reload
     const { failureMessage } = _base__WEBPACK_IMPORTED_MODULE_1__.message;
-    (0,_views_authenticationView__WEBPACK_IMPORTED_MODULE_2__.success)(failureMessage, type['error']);
+    (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_2__.renderAlert)(form, failureMessage, error);
   }
 
   //& Reload the page
@@ -324,33 +350,27 @@ const renderSubArticles = () => {
 
 /***/ }),
 
-/***/ "./js/views/authenticationView.js":
-/*!****************************************!*\
-  !*** ./js/views/authenticationView.js ***!
-  \****************************************/
+/***/ "./js/views/viewsBase.js":
+/*!*******************************!*\
+  !*** ./js/views/viewsBase.js ***!
+  \*******************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "success": () => /* binding */ success
+/* harmony export */   "renderAlert": () => /* binding */ renderAlert
 /* harmony export */ });
-/* harmony import */ var _base__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../base */ "./js/base.js");
-
-
-const { form } = _base__WEBPACK_IMPORTED_MODULE_0__.elements;
-
-//* Show login success
-const success = (message, type) => {
+//* Render Alert Box
+const renderAlert = (element, message, type) => {
   //) Render success
-
-  const markup = `    <div class="alert-box alert-box--${type} hideit">
+  const markup = `    <div class="alert-box alert-box--${type} hideit" id="alert">
         <p>${message}</p>
         <i class="fa fa-times alert-box__close"></i>
     </div> 
 `;
 
-  form.insertAdjacentHTML('afterend', markup);
+  element.insertAdjacentHTML('afterend', markup);
 };
 
 

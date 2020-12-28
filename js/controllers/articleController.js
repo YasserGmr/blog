@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { elements, requests } from '../base';
 import { renderSubArticles } from '../views/articleViews';
+import { renderAlert } from './../views/viewsBase';
 
 const {
   article,
@@ -8,6 +9,7 @@ const {
   articleInput,
   articleList,
   inputOptions,
+  addArticleForm,
 } = elements;
 
 const { addArticleReq } = requests;
@@ -77,6 +79,11 @@ const addInput = (input) => {
   Article[input.list] = input.input;
 };
 
+const removeBox = () => {
+  const alertBox = document.getElementById('alert');
+  alertBox.style.display = 'none';
+};
+
 const addSubArticle = (e) => {
   //) Prevent reload
   e.preventDefault();
@@ -86,6 +93,13 @@ const addSubArticle = (e) => {
 
   //) Add them to the Global article object
   addInput(input);
+
+  //) Render success alert
+  const message = 'Sub Article Added Successfully';
+  renderAlert(addArticleForm, message, 'info');
+
+  //) Wait 2 seconds, then remove it
+  setTimeout(removeBox, 2000);
 };
 
 const sendArticle = async (input) => {
@@ -101,9 +115,20 @@ const sendArticle = async (input) => {
       category,
       article,
     });
+
+    const message = 'Article Successfully Aded';
+    renderAlert(addArticleForm, message, 'success');
+
+    //) Wait 2 seconds, then remove it
+    setTimeout(removeBox, 2000);
     console.log(res);
   } catch (error) {
     console.log(error);
+    const message = 'Something went wrong, Please try again';
+    renderAlert(addArticleForm, message, 'error');
+
+    //) Wait 2 seconds, then remove it
+    setTimeout(removeBox, 2000);
   }
 };
 
