@@ -250,19 +250,24 @@ const loginHandler = async (e) => {
   //& Prevent Reload
   e.preventDefault();
 
+  //& Render The Loader
+  (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_2__.renderLoader)(form);
+
   //& Get email and password
   const credentials = {
     email: email.value,
     password: password.value,
   };
 
-  let type = ['success', 'error'];
-
+  const type = ['success', 'error'];
   const [success, error] = type;
 
   try {
     //& Pass The email and password to a helper function that loggs in
     await sendCredentials(credentials);
+
+    //& Remove the Loader
+    (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_2__.removeBox)('loader');
 
     //& Validate Login
     const { successMessage } = _base__WEBPACK_IMPORTED_MODULE_1__.message;
@@ -273,7 +278,7 @@ const loginHandler = async (e) => {
     (0,_views_viewsBase__WEBPACK_IMPORTED_MODULE_2__.renderAlert)(form, failureMessage, error);
   }
 
-  //& Reload the page
+  // & Reload the page
   setTimeout(location.reload(), 2000);
 };
 
@@ -359,11 +364,13 @@ const renderSubArticles = () => {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "renderAlert": () => /* binding */ renderAlert
+/* harmony export */   "renderAlert": () => /* binding */ renderAlert,
+/* harmony export */   "removeBox": () => /* binding */ removeBox,
+/* harmony export */   "renderLoader": () => /* binding */ renderLoader
 /* harmony export */ });
 //* Render Alert Box
 const renderAlert = (element, message, type) => {
-  //) Render success
+  //) Render Alert Box
   const markup = `    <div class="alert-box alert-box--${type} hideit" id="alert">
         <p>${message}</p>
         <i class="fa fa-times alert-box__close"></i>
@@ -371,6 +378,19 @@ const renderAlert = (element, message, type) => {
 `;
 
   element.insertAdjacentHTML('afterend', markup);
+};
+
+const removeBox = (idTag) => {
+  const el = document.getElementById(`${idTag}`);
+  el.style.display = 'none';
+};
+
+const renderLoader = (element) => {
+  const markup = `
+  <div class="lds-ring" id="loader"><div></div><div></div><div></div><div></div></div>
+  `;
+
+  element.insertAdjacentHTML('beforeend', markup);
 };
 
 

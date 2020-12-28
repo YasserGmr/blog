@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { elements, requests, message } from '../base';
-import { renderAlert } from '../views/viewsBase';
+import { renderAlert, renderLoader, removeBox } from '../views/viewsBase';
 
 const { login, email, password, form } = elements;
 const { loginReq } = requests;
@@ -16,19 +16,24 @@ const loginHandler = async (e) => {
   //& Prevent Reload
   e.preventDefault();
 
+  //& Render The Loader
+  renderLoader(form);
+
   //& Get email and password
   const credentials = {
     email: email.value,
     password: password.value,
   };
 
-  let type = ['success', 'error'];
-
+  const type = ['success', 'error'];
   const [success, error] = type;
 
   try {
     //& Pass The email and password to a helper function that loggs in
     await sendCredentials(credentials);
+
+    //& Remove the Loader
+    removeBox('loader');
 
     //& Validate Login
     const { successMessage } = message;
@@ -39,7 +44,7 @@ const loginHandler = async (e) => {
     renderAlert(form, failureMessage, error);
   }
 
-  //& Reload the page
+  // & Reload the page
   setTimeout(location.reload(), 2000);
 };
 
