@@ -6,7 +6,6 @@ block content
             .masonry
                 .grid-sizer
                 each article in articles
-                    - console.log(article)
                     if article.type === 'quote'
                         article.masonry__brick.entry.format-quote(data-aos='fade-up')
                             .entry__thumb

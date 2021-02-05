@@ -78,8 +78,8 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-// app.use('/api/v1/admin', adminRouter);
 // app.use('/api/v1/newsLetter', newsletterRouter);
+app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/', viewRouter);
 
