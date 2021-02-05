@@ -16,7 +16,7 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     title: "Yasser Goumghar's Blog | Home",
     url: '/',
     articles,
-    length: articles.length
+    length: articles.length,
   });
 });
 
@@ -32,7 +32,7 @@ exports.getArticle = catchAsync(async (req, res, next) => {
 
   res.status(200).render('article', {
     title: `${article.title} | Yasser Goumghar's Blog`,
-    article
+    article,
   });
 });
 
@@ -48,14 +48,14 @@ const multerFilter = (req, file, cb) => {
 
 const upload = multer({
   storage: multerStorage,
-  fileFilter: multerFilter
+  fileFilter: multerFilter,
 });
 
 //! Testing
 
 exports.uploadTourImages = upload.fields([
   { name: 'cover', maxCount: 1 },
-  { name: 'thumbnail', maxCount: 1 }
+  { name: 'thumbnail', maxCount: 1 },
 ]);
 
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
@@ -82,7 +82,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
     .toFile(`public/images/thumbs/masonry/gallery/${req.body.thumbnail}`);
 
   res.status(200).json({
-    message: 'Upload Succeded'
+    message: 'Upload Succeded',
   });
 });
 

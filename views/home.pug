@@ -6,13 +6,11 @@ block content
             .masonry
                 .grid-sizer
                 each article in articles
+                    - console.log(article)
                     if article.type === 'quote'
                         article.masonry__brick.entry.format-quote(data-aos='fade-up')
                             .entry__thumb
-                                blockquote
-                                    p
-                                        | #{article.article[0].quote}
-                                    cite #{article.article[0].quotee}
+                                | !{article.sanitizedHtml}
                         // end article
                     else
                         article.masonry__brick.entry.format-standard(data-aos='fade-up')
@@ -33,7 +31,7 @@ block content
                                         span.entry__meta-links
                                             each category in article.category
                                                 a(href=`/categories/${category}`) #{category}
-                        // end article
+                    // end article
                     // end masonry
                     // end masonry-wrap
             .row

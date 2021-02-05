@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const marked = require('marked');
+const createDomPurify = require('dompurify');
+const { JSDOM } = require('jsdom');
+const dompurify = createDomPurify(new JSDOM().window);
 
 const articleSchema = new mongoose.Schema(
   {
@@ -16,20 +20,23 @@ const articleSchema = new mongoose.Schema(
     slug: String,
     cover: {
       type: String,
-      required: [true, 'Please Put a Cover for the Blog Post'],
+      // required: [true, 'Please Put a Cover for the Blog Post'],
     },
     thumbnail: {
       type: String,
-      required: [true, 'Please Put a Thumbnail for the Blog Post'],
+      // required: [true, 'Please Put a Thumbnail for the Blog Post'],
     },
     createdAt: {
       type: Object,
       default: { date: undefined, string: undefined },
     },
     preview: String,
-    article: {
-      type: Array,
-      required: [true, 'Please Put an Article for the Blog Post'],
+    markdown: {
+      type: String,
+      required: [true, 'Please Put the markdown for the Blog Post'],
+    },
+    sanitizedHtml: {
+      type: String,
     },
     category: {
       type: [String],
@@ -55,19 +62,26 @@ articleSchema.index({
 //) Document Middleware: runs before .save() and .create() and not !insertMany()
 articleSchema.pre('save', function (next) {
   //* Put A slug
-  this.slug = slugify(this.title, { lower: true });
+  if (this.title) this.slug = slugify(this.title, { lower: true });
 
   //* Add createdAt Property
   this.createdAt.date = new Date();
   this.createdAt.string = this.createdAt.date.toString();
 
   //* Add preview property
-  if (this.type === 'article') {
-    this.preview = `${this.article[0].paragraph
-      .split(/\s+/)
-      .slice(0, 30)
-      .join(' ')}...`;
-  }
+  // if (this.type === 'article') {
+  //   this.preview = `${this.article[0].paragraph
+  //     .split(/\s+/)
+  //     .slice(0, 30)
+  //     .join(' ')}...`;
+  // }
+
+  if (this.markdown)
+    this.sanitizedHtml = dompurify.sanitize(
+      marked(this.markdown, {
+        headerIds: false,
+      })
+    );
 
   next();
 });

@@ -1,3 +1,4 @@
 {
-    "ext": "js,html,pug,css"
+    "ext": "js,html,pug,css",
+    "ignore": ["dev-data/*.js"] 
 }

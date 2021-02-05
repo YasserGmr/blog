@@ -53,7 +53,6 @@ const addArticleTypes = () => {
 
 const Article = {
   category: [],
-  article: [],
 };
 
 const handleAddCategory = (input) => Article['category'].push(input.input);
@@ -104,16 +103,16 @@ const addSubArticle = (e) => {
 
 const sendArticle = async (input) => {
   try {
-    const { title, cover, thumbnail, type, category, article } = input;
+    const { title, cover, thumbnail, type, category, markdown } = input;
     console.log(input);
 
     const res = await axios.post(addArticleReq, {
       title,
-      cover,
-      thumbnail,
       type,
       category,
-      article,
+      markdown,
+      // cover,
+      // thumbnail,
     });
 
     const message = 'Article Successfully Aded';

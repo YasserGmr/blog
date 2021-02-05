@@ -53,7 +53,7 @@ if (process.env.NODE_ENV === 'development') {
 const limiter = rateLimit({
   max: 100,
   windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, please try again in an hour!'
+  message: 'Too many requests from this IP, please try again in an hour!',
 });
 app.use('/api', limiter);
 
@@ -78,13 +78,13 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.use('/api/v1/admin', adminRouter);
-app.use('/api/v1/newsLetter', newsletterRouter);
+// app.use('/api/v1/admin', adminRouter);
+// app.use('/api/v1/newsLetter', newsletterRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/', viewRouter);
 
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  next(new AppError(`Oops, we can't find what you requested !`, 404));
 });
 
 app.use(globalErrorHandler);

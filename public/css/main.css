@@ -3609,6 +3609,7 @@ footer h4::after {
    margin-top: 6rem;
    padding-left: 6rem;
    padding-right: 6rem;
+   padding-bottom: 15rem;
 }
 
 .s-content__main img {
@@ -3701,7 +3702,7 @@ footer h4::after {
  * ## author profile
  * ------------------------------------------------------------------- */
 .s-content__author {
-   margin-top: 10.2rem;
+   margin-top: 5rem;
    padding-left: 9rem;
    position: relative;
 }
@@ -4287,3 +4288,6 @@ footer h4::after {
    }
  }
  
+ .about {
+    padding-top: 20rem;
+ }

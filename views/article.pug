@@ -1,7 +1,7 @@
 extends base
 
 block content
-    section.s-content.s-content--narrow.s-content--no-padding-bottom
+    section.s-content.s-content--narrow
         article.row.format-standard
             .s-content__header.col-full
                 h1.s-content__header-title
@@ -15,49 +15,21 @@ block content
             // end s-content__header
             .s-content__media.col-full
                 .s-content__post-thumb
-                    img(src= `${article.thumbnail}`  
-                    sizes='(max-width: 2000px) 100vw, 2000px' alt='')
-            // end s-content__media
+                    img(src=article.thumbnail) 
             .col-full.s-content__main
-                each content in article.article
-                    if (content.paragraph)
-                        if (content.class)
-                            p.article(class= `${content.class}`)
-                                | #{content.paragraph}.
-                        else 
-                            p.article
-                                | #{content.paragraph}.
-                    else if (content.heading)
-                        h2 #{content.heading}
-                    else if (content.orderedList)
-                        ol
-                            each orderedList in content.orderedList
-                                li #{orderedList}
-                    else if (content.quote) 
-                        blockquote
-                            p
-                                | #{content.quote}
-                            if (content.quotee)
-                                cite
-                                    a(href='#') #{content.quotee}
-                    else if (content.code)
-                            pre
-                                each codeBlock in content.code 
-                                    code
-                                            | #{codeBlock}
-                    else if (content.image)
-                        img(src=`${content.image}` style="padding-left: 4rem;padding-right: 4rem;")
+                | !{article.sanitizedHtml}
 
 
-            h3 About the Author
-            .s-content__author
-                img(src='/images/favicon.png' alt='')
-                .s-content__author-about
-                    h4.s-content__author-name
-                        a(href='/about') Yasser Goumghar
-                    p
-                        | Hey, I'm Yasser Goumghar, a Moroccan entrepreneur, Marketer, Full Stack Developper, and a High School Student.
-                    ul.s-content__author-social
-                        li
-                            a(href='https://twitter.com/iKarasumaRenya' target='_blank') Twitter
-        // end s-content__main
+            .about
+                h3 About the Author
+                .s-content__author
+                    img(src='/images/favicon.png' alt='')
+                    .s-content__author-about
+                        h4.s-content__author-name
+                            a(href='/about') Yasser Goumghar
+                        p
+                            | Hey, I'm Yasser Goumghar, a Moroccan entrepreneur, Marketer, Full Stack Developper, and a High School Student.
+                        ul.s-content__author-social
+                            li
+                                a(href='https://twitter.com/iKarasumaRenya' target='_blank') Twitter
+                // end s-content__main

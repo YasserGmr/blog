@@ -13,10 +13,6 @@ router.get('/home', adminController.admin);
 router.route('/article').post(articleController.createArticle);
 router
   .route('/article/picutres')
-  //   .post(articleController.uploadPhoto, articleController.addPictures);
   .post(articleController.uploadTourImages, articleController.resizeTourImages);
-
-//   .patch(articleController.editArticle)
-//   .delete(articleController.deleteArticle);
 
 module.exports = router;
