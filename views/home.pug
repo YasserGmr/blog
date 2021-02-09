@@ -15,14 +15,13 @@ block content
                         article.masonry__brick.entry.format-standard(data-aos='fade-up')
                             .entry__thumb
                                 a.entry__thumb-link(href=`/article/${article.slug}`)
-                                    //- img(src='images/thumbs/masonry/lamp-400.jpg' srcset='images/thumbs/masonry/lamp-400.jpg 1x, images/thumbs/masonry/lamp-800.jpg 2x' alt='')
                                     img(src=`${article.cover}` alt=`${article.title}`)
                             .entry__text
                                 .entry__header
                                     .entry__date
                                         a(href=`/article/${article.slug}`) #{article.createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
                                     h1.entry__title
-                                        a(href=`/article/${article.slug}`) #{article.title}.
+                                        a(href=`/article/${article.slug}`) #{article.title}
                                 .entry__excerpt
                                     p
                                         | #{article.preview}

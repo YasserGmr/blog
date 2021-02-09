@@ -2,37 +2,37 @@
     .col-full
         .featured
             .featured__column.featured__column--big
-                .entry(style=`background-image:url('${articles[0].thumbnail}');`)
+                .entry(style=`background-image:url('${filteredArticles[0].thumbnail}');`)
                     .entry__content
                         span.entry__category
-                            a(href='#') #{articles[0].category[0]}
+                            a(href='#') #{filteredArticles[0].category[0]}
                         h1
-                            a(href='#0' title='') #{articles[0].title}.
+                            a(href=`/article/${filteredArticles[0].slug}` title='') #{filteredArticles[0].title}.
                         .entry__info
                             a.entry__profile-pic(href='#0')
-                                img.avatar(src='/favicon.png' alt='')
+                                img.avatar(src='/images/favicon.png' alt='')
                             ul.entry__meta
                                 li
                                     a(href='#0') Yasser Goumghar
-                                li #{articles[0].createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
+                                li #{filteredArticles[0].createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
                     // end entry__content
                     // end entry
                     // end featured__big
             .featured__column.featured__column--small
                 - for (var i = 1; i < 3; i++) {
-                    .entry(style=`background-image:url(${articles[i].thumbnail});`)
+                    .entry(style=`background-image:url(${filteredArticles[i].thumbnail});`)
                         .entry__content
                             span.entry__category
-                                a(href='#0') #{articles[i].category[0]}
+                                a(href=`/article/${filteredArticles[i].slug}`) #{filteredArticles[i].category[0]}
                             h1
-                                a(href='#0' title='') #{articles[i].title}.
+                                a(href=`/article/${filteredArticles[i].slug}` title='') #{filteredArticles[i].title}.
                             .entry__info
-                                a.entry__profile-pic(href='#0')
-                                    img.avatar(src='/favicon.png' alt='')
+                                a.entry__profile-pic(href=`/article/${filteredArticles[i].slug}`)
+                                    img.avatar(src='/images/favicon.png' alt='')
                                 ul.entry__meta
                                     li
                                         a(href='#0') Yasser Goumghar
-                                    li #{articles[0].createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
+                                    li #{filteredArticles[0].createdAt.string.split(/\s+/).slice(0, 4).join(' ')}
                         // end entry__content
                         // end entry
                 - }

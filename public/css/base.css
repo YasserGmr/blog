@@ -941,3 +941,8 @@ textarea {
    text-align: center;
 }
 
+.article__thumbnail {
+display: block;
+margin-left: auto;
+margin-right: auto;
+}

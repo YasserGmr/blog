@@ -6,9 +6,12 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
+const filterPreviewArticles = (article) => article.type !== 'quote';
+
 exports.getOverview = catchAsync(async (req, res, next) => {
-  //* 1) Get article data from collection
+  //* 1) Get article data from collection and remove quotes from Articles array to prevent it from appearing in the preview section.
   const articles = await Article.find().sort({ createdAt: -1 });
+  const filteredArticles = articles.filter(filterPreviewArticles);
 
   //* 2) Build template
   //* 3) Render that template using tour data from 1)
@@ -16,7 +19,8 @@ exports.getOverview = catchAsync(async (req, res, next) => {
     title: "Yasser Goumghar's Blog | Home",
     url: '/',
     articles,
-    length: articles.length,
+    filteredArticles,
+    length: filteredArticles.length,
   });
 });
 

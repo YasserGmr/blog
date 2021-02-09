@@ -70,10 +70,7 @@ articleSchema.pre('save', function (next) {
 
   //* Add preview property
   // if (this.type === 'article') {
-  //   this.preview = `${this.article[0].paragraph
-  //     .split(/\s+/)
-  //     .slice(0, 30)
-  //     .join(' ')}...`;
+  //   this.preview = `${this.article.split(/\s+/).slice(0, 30).join(' ')}...`;
   // }
 
   if (this.markdown)
