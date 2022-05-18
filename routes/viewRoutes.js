@@ -7,6 +7,6 @@ const router = express.Router();
 
 router.get('/', articleController.getOverview);
 router.get('/article/:slug', articleController.getArticle);
-router.get('/login', authController.isLoggedIn, viewsController.getLogin);
+// router.get('/login', authController.isLoggedIn, viewsController.getLogin);
 
 module.exports = router;

@@ -31,12 +31,15 @@ const articleSchema = new mongoose.Schema(
       default: { date: undefined, string: undefined },
     },
     preview: String,
-    markdown: {
-      type: String,
-      required: [true, 'Please Put the markdown for the Blog Post'],
-    },
-    sanitizedHtml: {
-      type: String,
+    // markdown: {
+    //   type: String,
+    //   required: [true, 'Please Put the markdown for the Blog Post'],
+    // },
+    // sanitizedHtml: {
+    //   type: String,
+    // },
+    article: {
+      type: Array,
     },
     category: {
       type: [String],
@@ -73,12 +76,12 @@ articleSchema.pre('save', function (next) {
   //   this.preview = `${this.article.split(/\s+/).slice(0, 30).join(' ')}...`;
   // }
 
-  if (this.markdown)
-    this.sanitizedHtml = dompurify.sanitize(
-      marked(this.markdown, {
-        headerIds: false,
-      })
-    );
+  // if (this.markdown)
+  //   this.sanitizedHtml = dompurify.sanitize(
+  //     marked(this.markdown, {
+  //       headerIds: false,
+  //     })
+  //   );
 
   next();
 });

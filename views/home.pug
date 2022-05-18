@@ -9,7 +9,10 @@ block content
                     if article.type === 'quote'
                         article.masonry__brick.entry.format-quote(data-aos='fade-up')
                             .entry__thumb
-                                | !{article.sanitizedHtml}
+                                blockquote
+                                    p
+                                        | #{article.article[0].quote}
+                                    cite #{article.article[0].quotee}
                         // end article
                     else
                         article.masonry__brick.entry.format-standard(data-aos='fade-up')
